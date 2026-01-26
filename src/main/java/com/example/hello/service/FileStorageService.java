@@ -58,13 +58,43 @@ public class FileStorageService {
         }
     }
 
+    public String storeIdFile(MultipartFile file) {
+        try {
+            if (file.isEmpty()) {
+                throw new RuntimeException("Failed to store empty file.");
+            }
 
+            // Get original filename and extension
+            String originalFilename = file.getOriginalFilename();
+            String extension = "";
+            if (originalFilename != null && originalFilename.contains(".")) {
+                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
 
+            // Validate file type
+            if (!isValidImageFile(extension)) {
+                throw new RuntimeException("Only image files are allowed (JPG, JPEG, PNG, GIF, WebP)");
+            }
+
+            // Generate unique filename
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + System.currentTimeMillis() + extension;
+
+            // Copy file to upload directory
+            Path destinationFile = identityUploadDir.resolve(uniqueFilename);
+            Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+
+            // Return the URL path (not the file system path)
+            return "/uploads/identities/" + uniqueFilename;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file.", e);
+        }
+    }
 
     private boolean isValidImageFile(String extension) {
         String lowerExt = extension.toLowerCase();
-        return lowerExt.equals(".jpg") || lowerExt.equals(".jpeg") || 
-               lowerExt.equals(".png") || lowerExt.equals(".gif") || 
-               lowerExt.equals(".webp");
+        return lowerExt.equals(".jpg") || lowerExt.equals(".jpeg") ||
+                lowerExt.equals(".png") || lowerExt.equals(".gif") ||
+                lowerExt.equals(".webp");
     }
 }

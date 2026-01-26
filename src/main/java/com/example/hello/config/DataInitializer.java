@@ -15,7 +15,7 @@ public class DataInitializer {
             // Create Admin
             try {
                 if (userService.findByUsername("admin").isEmpty()) {
-                    userService.registerUser("admin", "admin123", "System Admin", "ADMIN");
+                    userService.registerUser("admin", "admin123", "admin", "ADMIN", null);
                     System.out.println("Admin user created: admin / admin123");
                 }
             } catch (Exception e) {
@@ -25,7 +25,8 @@ public class DataInitializer {
             // Create Seller
             try {
                 if (userService.findByUsername("seller").isEmpty()) {
-                    userService.registerUser("seller", "seller123", "Test Seller", "SELLER");
+                    userService.registerUser("seller", "seller123", "Test Seller", "SELLER",
+                            "http://example.com/identity.jpg");
                     System.out.println("Seller user created: seller / seller123");
                 }
             } catch (Exception e) {
@@ -35,7 +36,7 @@ public class DataInitializer {
             // Create User
             try {
                 if (userService.findByUsername("user").isEmpty()) {
-                    userService.registerUser("user", "user123", "Test User", "USER");
+                    userService.registerUser("user", "user123", "Test User", "USER", null);
                     System.out.println("Standard user created: user / user123");
                 }
             } catch (Exception e) {

@@ -69,7 +69,34 @@
             const modal = document.getElementById('identityModal');
             modal.classList.add('hidden');
         }
+
+        // Event delegation for identity buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(event) {
+                // Check if clicked element or its parent has the view-identity-btn class
+                const viewIdentityBtn = event.target.closest('.view-identity-btn');
+                if (viewIdentityBtn) {
+                    const imageUrl = viewIdentityBtn.getAttribute('data-image-url');
+                    if (imageUrl) {
+                        viewIdentity(imageUrl);
+                    }
+                }
+                
+                // Close modal when clicking outside or on X button
+                if (event.target.id === 'identityModal' || event.target.closest('.modal-close-btn')) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
     </script>
+    
 </head>
 
 <body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-dark-text transition-colors duration-300 font-sans">
@@ -238,13 +265,14 @@
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <button th:if="${seller.identityImageUrl != null}"
-                                            th:onclick="'viewIdentity(\'' + ${seller.identityImageUrl} + '\')'"
-                                            class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                                            th:attr="data-image-url=${seller.identityImageUrl}"
+                                            class="view-identity-btn text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
                                             title="View Identity Document">
                                             <i class="fas fa-id-card"></i>
                                         </button>
                                         <span th:if="${seller.identityImageUrl == null}"
-                                            class="text-gray-400 dark:text-gray-600">N/A</span>
+                                                class="text-gray-400 dark:text-gray-600">N/A
+                                        </span>
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <div class="flex items-center justify-center gap-2">

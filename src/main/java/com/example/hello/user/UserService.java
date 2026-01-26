@@ -22,16 +22,23 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(String username, String password, String fullName, String roleName) {
+    public void registerUser(String username, String password, String fullName, String roleName,
+            String identityImageUrl) {
         if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("User already exists");
         }
         Role role = Role.valueOf(roleName);
-        
-        // All users (Buyers, Sellers, Admins) are automatically approved
-        User user = new User(username, passwordEncoder.encode(password), fullName, 
-                           Collections.singleton(role), AccountStatus.APPROVED, true);
-        userRepository.save(user);
+
+        if (role == Role.SELLER) {
+            User user = new User(username, passwordEncoder.encode(password), fullName,
+                    Collections.singleton(role), AccountStatus.PENDING, true, identityImageUrl);
+            userRepository.save(user);
+
+        } else {
+            User user = new User(username, passwordEncoder.encode(password), fullName,
+                    Collections.singleton(role), AccountStatus.APPROVED, true, null);
+            userRepository.save(user);
+        }
     }
 
     public Optional<User> findByUsername(String username) {
@@ -46,21 +53,18 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-        
-        // Check if account is enabled
-        if (!user.isEnabled()) {
+
+        if (!user.isEnabled() || user.getAccountStatus() == AccountStatus.PENDING) {
             throw new RuntimeException("Account is pending verification. Please wait for admin approval.");
         }
-        
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 user.getRoles().stream()
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                        .collect(Collectors.toList())
-        );
+                        .collect(Collectors.toList()));
     }
-
 
     public java.util.List<User> getPendingSellers() {
         return userRepository.findByRolesContainingAndAccountStatus(Role.SELLER, AccountStatus.PENDING);
@@ -79,7 +83,6 @@ public class UserService implements UserDetailsService {
     }
 
     public void rejectSeller(Long userId) {
-        // Simply delete the user account
         userRepository.deleteById(userId);
     }
 

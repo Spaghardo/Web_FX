@@ -33,10 +33,11 @@ public class User {
     @Column(nullable = false)
     private AccountStatus accountStatus = AccountStatus.APPROVED;
 
-
-
     @Column(nullable = false)
     private boolean enabled = true;
+
+    @Column(name = "identity_image_url")
+    private String identityImageUrl;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -54,13 +55,15 @@ public class User {
         this.enabled = true;
     }
 
-    public User(String username, String password, String fullName, Set<Role> roles, AccountStatus accountStatus, boolean enabled) {
+    public User(String username, String password, String fullName, Set<Role> roles, AccountStatus accountStatus,
+            boolean enabled, String identityImageUrl) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.roles = roles;
         this.accountStatus = accountStatus;
         this.enabled = enabled;
+        this.identityImageUrl = identityImageUrl;
     }
 
     public Long getId() {
@@ -111,13 +114,19 @@ public class User {
         this.accountStatus = accountStatus;
     }
 
-
-
     public boolean isEnabled() {
         return enabled;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getIdentityImageUrl() {
+        return identityImageUrl;
+    }
+
+    public void setIdentityImageUrl(String identityImageUrl) {
+        this.identityImageUrl = identityImageUrl;
     }
 }
