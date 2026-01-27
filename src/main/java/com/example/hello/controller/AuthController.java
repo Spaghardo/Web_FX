@@ -36,7 +36,7 @@ public class AuthController {
             @RequestParam String password,
             @RequestParam String fullName,
             @RequestParam String role,
-            @RequestParam(required = false) MultipartFile identityImage, // Change to MultipartFile
+            @RequestParam(required = false) MultipartFile identityImage,
             Model model) {
         try {
             String identityImageUrl = null;

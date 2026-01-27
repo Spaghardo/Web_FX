@@ -63,11 +63,11 @@
 
 <body class="bg-gray-50 text-gray-800 dark:bg-dark-bg dark:text-dark-text transition-colors duration-300">
 
-    <!-- Header -->
+    
     <header
         class="bg-white dark:bg-dark-surface shadow-sm sticky top-0 z-50 border-b border-gray-100 dark:border-dark-border transition-colors duration-300">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Logo -->
+            
             <a href="/" class="text-2xl font-bold text-primary-600 tracking-tight flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -77,9 +77,9 @@
                 Karaoui & Rahmani
             </a>
 
-            <!-- Nav Links -->
+            
             <div class="flex items-center space-x-4 lg:space-x-6">
-                <!-- Theme Toggle -->
+                
                 <button onclick="toggleTheme()"
                     class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700 transition focus:outline-none"
                     title="Toggle Theme">
@@ -113,7 +113,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="container mx-auto px-4 py-8">
         <div class="mb-6">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -142,7 +142,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Product Card -->
+            
             <div th:each="product : ${products}"
                 class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 dark:border-dark-border flex flex-col h-full">
                 <a th:href="@{/products/{id}(id=${product.id})}" class="block flex-1 flex flex-col">
@@ -193,8 +193,8 @@
 
     <script>
         function toggleFavorite(event, productId) {
-            event.preventDefault(); // Prevent link navigation
-            event.stopPropagation(); // Stop event bubbling
+            event.preventDefault(); 
+            event.stopPropagation(); 
 
             const btn = event.currentTarget;
 
@@ -214,15 +214,15 @@
                 })
                 .then(data => {
                     if (data.status === 'removed') {
-                        // Remove the product card from the view
+                      
                         const card = btn.closest('.group');
                         if (card) {
                             card.remove();
                         }
-                        // Check if list is empty and show empty state if needed
+                       
                         const grid = document.querySelector('.grid');
                         if (grid && grid.children.length === 0) {
-                            location.reload(); // Reload to show empty state
+                            location.reload(); 
                         }
                     }
                 })

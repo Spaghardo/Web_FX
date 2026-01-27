@@ -61,7 +61,7 @@
 
 <body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-dark-text transition-colors duration-300">
 
-    <!-- Header -->
+    
     <header
         class="bg-white dark:bg-dark-surface shadow-sm sticky top-0 z-50 border-b border-gray-100 dark:border-dark-border transition-colors duration-300">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -74,7 +74,7 @@
                 Karaoui & Rahmani
             </a>
             <div class="flex items-center space-x-4">
-                <!-- Theme Toggle -->
+                
                 <button onclick="toggleTheme()"
                     class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700 transition focus:outline-none"
                     title="Toggle Theme">
@@ -89,8 +89,12 @@
                             d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
-                <a href="/logout"
-                    class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition">Logout</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit"
+                        class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </button>
+                </form>
             </div>
         </div>
     </header>

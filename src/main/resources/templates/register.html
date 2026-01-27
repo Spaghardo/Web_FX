@@ -60,18 +60,18 @@
         }
     </script>
     <script>
-    // Function to toggle identity photo upload field
+   
     function toggleIdentityPhotoField() {
         const roleSelect = document.getElementById('role');
         const identityPhotoSection = document.getElementById('identityPhotoSection');
         
         if (roleSelect.value === 'SELLER') {
             identityPhotoSection.classList.remove('hidden');
-            // Make the file input required for sellers
+    
             document.getElementById('imageInput').required = true;
         } else {
             identityPhotoSection.classList.add('hidden');
-            // Clear and make optional for non-sellers
+       
             document.getElementById('imageInput').required = false;
             document.getElementById('imageInput').value = '';
             document.getElementById('imagePreview').classList.add('hidden');
@@ -79,7 +79,7 @@
         }
     }
 
-    // Function to preview selected image
+  
     function previewImage(event) {
         const input = event.target;
         const previewContainer = document.getElementById('imagePreview');
@@ -100,9 +100,9 @@
         }
     }
 
-    // Initialize on page load
+   
     document.addEventListener('DOMContentLoaded', function() {
-        toggleIdentityPhotoField(); // Set initial state
+        toggleIdentityPhotoField();
     });
 </script>
 </head>

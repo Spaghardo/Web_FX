@@ -22,7 +22,8 @@ public class MessageService {
     }
 
     public List<Message> getConversation(User user1, User user2, Product product) {
-        List<Message> allMessages = messageRepository.findBySenderAndReceiverOrReceiverAndSenderOrderByTimestampAsc(user1, user2, user1, user2);
+        List<Message> allMessages = messageRepository
+                .findBySenderAndReceiverOrReceiverAndSenderOrderByTimestampAsc(user1, user2, user1, user2);
         if (product == null) {
             return allMessages.stream().filter(m -> m.getProduct() == null).collect(Collectors.toList());
         }
@@ -33,20 +34,19 @@ public class MessageService {
 
     public List<com.example.hello.dto.ConversationSummary> getConversations(User user) {
         List<Message> allMessages = messageRepository.findBySenderOrReceiverOrderByTimestampDesc(user, user);
-        
-        // Group by Key(Partner, Product)
+
         Map<String, com.example.hello.dto.ConversationSummary> map = new LinkedHashMap<>();
-        
+
         for (Message m : allMessages) {
             User partner = m.getSender().getId().equals(user.getId()) ? m.getReceiver() : m.getSender();
             Product product = m.getProduct();
             String key = partner.getId() + "_" + (product != null ? product.getId() : "null");
-            
+
             if (!map.containsKey(key)) {
                 map.put(key, new com.example.hello.dto.ConversationSummary(partner, product, m));
             }
         }
-        
+
         return new ArrayList<>(map.values());
     }
 }

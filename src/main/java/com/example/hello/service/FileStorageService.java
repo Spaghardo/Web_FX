@@ -31,26 +31,21 @@ public class FileStorageService {
                 throw new RuntimeException("Failed to store empty file.");
             }
 
-            // Get original filename and extension
             String originalFilename = file.getOriginalFilename();
             String extension = "";
             if (originalFilename != null && originalFilename.contains(".")) {
                 extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
 
-            // Validate file type
             if (!isValidImageFile(extension)) {
                 throw new RuntimeException("Only image files are allowed (JPG, JPEG, PNG, GIF, WebP)");
             }
 
-            // Generate unique filename
             String uniqueFilename = UUID.randomUUID().toString() + "_" + System.currentTimeMillis() + extension;
 
-            // Copy file to upload directory
             Path destinationFile = uploadDir.resolve(uniqueFilename);
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
-            // Return the URL path (not the file system path)
             return "/uploads/products/" + uniqueFilename;
 
         } catch (IOException e) {
@@ -64,26 +59,21 @@ public class FileStorageService {
                 throw new RuntimeException("Failed to store empty file.");
             }
 
-            // Get original filename and extension
             String originalFilename = file.getOriginalFilename();
             String extension = "";
             if (originalFilename != null && originalFilename.contains(".")) {
                 extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
 
-            // Validate file type
             if (!isValidImageFile(extension)) {
                 throw new RuntimeException("Only image files are allowed (JPG, JPEG, PNG, GIF, WebP)");
             }
 
-            // Generate unique filename
             String uniqueFilename = UUID.randomUUID().toString() + "_" + System.currentTimeMillis() + extension;
 
-            // Copy file to upload directory
             Path destinationFile = identityUploadDir.resolve(uniqueFilename);
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
-            // Return the URL path (not the file system path)
             return "/uploads/identities/" + uniqueFilename;
 
         } catch (IOException e) {

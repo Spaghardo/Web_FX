@@ -44,7 +44,7 @@
         }
     </script>
     <script>
-        // Check for saved theme preference or use system preference
+        
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark')
         } else {
@@ -65,11 +65,10 @@
 
 <body class="bg-gray-50 text-gray-800 dark:bg-dark-bg dark:text-dark-text transition-colors duration-300">
 
-    <!-- Header -->
     <header
         class="bg-white dark:bg-dark-surface shadow-sm sticky top-0 z-50 border-b border-gray-100 dark:border-dark-border transition-colors duration-300">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Logo -->
+            
             <a href="/" class="text-2xl font-bold text-primary-600 tracking-tight flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -79,7 +78,7 @@
                 Karaoui & Rahmani
             </a>
 
-            <!-- Search Bar -->
+          
             <form action="/products" method="get" class="hidden md:flex flex-1 max-w-xl mx-8 relative">
                 <input type="text" name="query" placeholder="Search for products, cars, jobs..."
                     class="w-full pl-4 pr-12 py-2.5 rounded-full border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition shadow-sm">
@@ -93,19 +92,19 @@
                 </button>
             </form>
 
-            <!-- Nav Links -->
+         
             <div class="flex items-center space-x-4 lg:space-x-6">
-                <!-- Theme Toggle -->
+                
                 <button onclick="toggleTheme()"
                     class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700 transition focus:outline-none"
                     title="Toggle Theme">
-                    <!-- Sun Icon (for Dark Mode) -->
+                    
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
-                    <!-- Moon Icon (for Light Mode) -->
+                   
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -150,7 +149,7 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    
     <section class="relative bg-gradient-to-br from-primary-500 to-red-600 text-white py-24 overflow-hidden">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
         </div>
@@ -175,13 +174,13 @@
         </div>
     </section>
 
-    <!-- Main Content -->
+    
     <main class="container mx-auto px-4 py-12">
         <div class="flex flex-col md:flex-row gap-8">
 
-            <!-- Sidebar Categories -->
+            
             <aside class="w-full md:w-1/4">
-                <!-- My Profile Section (Visible on login) -->
+               
                 <div sec:authorize="isAuthenticated()"
                     class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-100 dark:border-dark-border p-6 mb-6 transition-all hover:shadow-md">
                     <div class="flex items-center space-x-4 mb-4">
@@ -228,9 +227,9 @@
                 </div>
             </aside>
 
-            <!-- Product Grid -->
+            
             <div class="w-full md:w-3/4">
-                <!-- My Favorites Section -->
+                
                 <div sec:authorize="isAuthenticated()" th:if="${favoriteProducts != null and !favoriteProducts.empty}"
                     class="mb-12">
                     <div class="flex items-center justify-between mb-6">
@@ -250,7 +249,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                        <!-- Favorite Product Card -->
+                        
                         <div th:each="product : ${favoriteProducts}"
                             class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 dark:border-dark-border flex flex-col h-full">
                             <a th:href="@{/products/{id}(id=${product.id})}" class="block flex-1 flex flex-col">
@@ -326,7 +325,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Product Card -->
+                    
                     <div th:each="product : ${products}"
                         class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group border border-gray-100 dark:border-dark-border flex flex-col h-full">
                         <a th:href="@{/products/{id}(id=${product.id})}" class="block flex-1 flex flex-col">
@@ -385,7 +384,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-900 dark:bg-black text-white py-16 border-t border-gray-800">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
@@ -468,10 +467,10 @@
     </footer>
 
     <script>
-        // Store favorite product IDs
+        
         let favoriteProductIds = new Set();
 
-        // Load favorite IDs when page loads
+        
         document.addEventListener('DOMContentLoaded', function () {
             loadFavoriteIds();
         });
@@ -493,13 +492,13 @@
 
                 const svg = btn.querySelector('svg');
                 if (isFavorite) {
-                    // Filled heart - red
+                    
                     svg.setAttribute('fill', 'currentColor');
                     btn.classList.remove('text-gray-400', 'bg-gray-100', 'dark:bg-slate-700');
                     btn.classList.add('text-red-500', 'bg-red-50', 'dark:bg-red-900/20');
                     btn.title = 'Remove from Favorites';
                 } else {
-                    // Outline heart - gray
+                    
                     svg.setAttribute('fill', 'none');
                     btn.classList.remove('text-red-500', 'bg-red-50', 'dark:bg-red-900/20');
                     btn.classList.add('text-gray-400', 'bg-gray-100', 'dark:bg-slate-700');
@@ -534,7 +533,7 @@
                             favoriteProductIds.add(productId);
                         } else if (data.status === 'removed') {
                             favoriteProductIds.delete(productId);
-                            // If we're in the favorites section, remove the card
+                            
                             if (btn.dataset.favorited === 'true') {
                                 const card = btn.closest('.group');
                                 if (card) {
@@ -542,7 +541,7 @@
                                     card.style.transform = 'scale(0.9)';
                                     setTimeout(() => {
                                         card.remove();
-                                        // Reload page if no favorites left to show empty state
+                                       
                                         const favSection = document.querySelector('[sec\\:authorize="isAuthenticated()"]');
                                         if (favSection && favSection.querySelectorAll('.group').length === 0) {
                                             location.reload();

@@ -40,24 +40,24 @@ public class HomeController {
                 .distinct()
                 .collect(Collectors.toList());
         model.addAttribute("categories", categories);
-        
-        // Add favorite products for authenticated users
+
         if (userDetails != null) {
             User user = userService.findByUsername(userDetails.getUsername()).orElse(null);
             if (user != null) {
                 List<Product> favoriteProducts = favoriteService.getUserFavorites(user).stream()
                         .map(Favorite::getProduct)
-                        .limit(6) // Limit to 6 products for home page
+                        .limit(6)
                         .collect(Collectors.toList());
                 model.addAttribute("favoriteProducts", favoriteProducts);
             }
         }
-        
+
         return "home";
     }
 
     @GetMapping("/products")
-    public String search(@RequestParam(required = false) String query, @RequestParam(required = false) String category, Model model) {
+    public String search(@RequestParam(required = false) String query, @RequestParam(required = false) String category,
+            Model model) {
         List<Product> products = productService.getAllProducts();
         List<Product> filtered = products;
         if (query != null && !query.isEmpty()) {
@@ -70,13 +70,13 @@ public class HomeController {
                     .filter(p -> p.getCategory().equalsIgnoreCase(category))
                     .collect(Collectors.toList());
         }
-        
+
         List<String> categories = products.stream()
                 .map(Product::getCategory)
                 .distinct()
                 .collect(Collectors.toList());
         model.addAttribute("categories", categories);
-        
+
         model.addAttribute("products", filtered);
         return "product-list";
     }

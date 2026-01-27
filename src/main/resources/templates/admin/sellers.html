@@ -70,10 +70,10 @@
             modal.classList.add('hidden');
         }
 
-        // Event delegation for identity buttons
+       
         document.addEventListener('DOMContentLoaded', function() {
             document.addEventListener('click', function(event) {
-                // Check if clicked element or its parent has the view-identity-btn class
+              
                 const viewIdentityBtn = event.target.closest('.view-identity-btn');
                 if (viewIdentityBtn) {
                     const imageUrl = viewIdentityBtn.getAttribute('data-image-url');
@@ -82,13 +82,13 @@
                     }
                 }
                 
-                // Close modal when clicking outside or on X button
+               
                 if (event.target.id === 'identityModal' || event.target.closest('.modal-close-btn')) {
                     closeModal();
                 }
             });
             
-            // Close modal with Escape key
+           
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape') {
                     closeModal();
@@ -102,7 +102,7 @@
 <body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-dark-text transition-colors duration-300 font-sans">
 
     <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
+        
         <div
             class="w-64 bg-white dark:bg-dark-surface border-r border-gray-200 dark:border-dark-border flex flex-col shrink-0 transition-colors duration-300">
             <div class="p-6 flex items-center justify-center border-b border-gray-100 dark:border-dark-border">
@@ -181,7 +181,7 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+        
         <div class="flex-1 overflow-auto bg-gray-50 dark:bg-dark-bg transition-colors duration-300">
             <div class="p-8">
                 <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Manage Sellers</h1>
@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    <!-- Identity Document Modal -->
+    
     <div id="identityModal"
         class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
         onclick="closeModal()">

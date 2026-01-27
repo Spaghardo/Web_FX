@@ -1,5 +1,6 @@
 package com.example.hello.favorite;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,27 @@ public class FavoriteService {
 
     @Transactional
     public void addFavorite(User user, Product product) {
+        // Check if already exists to avoid duplicates
+        if (!isFavorite(user, product)) {
+            Favorite favorite = new Favorite();
+            favorite.setUser(user);
+            favorite.setProduct(product);
+            favorite.setCreatedAt(LocalDateTime.now());
+            favoriteRepository.save(favorite);
+            // Add logging
+            System.out.println("Saved favorite: user=" + user.getId() + ", product=" + product.getId());
+        }
+    }
+
+    @Transactional
+    public void removeFavorite(User user, Product product) {
+        favoriteRepository.deleteByUserAndProduct(user, product);
+        // Add logging
+        System.out.println("Removed favorite: user=" + user.getId() + ", product=" + product.getId());
+    }
+
+    @Transactional
+    public void addFavorite1(User user, Product product) {
         if (!favoriteRepository.existsByUserAndProduct(user, product)) {
             Favorite favorite = new Favorite(user, product);
             favoriteRepository.save(favorite);
@@ -28,7 +50,7 @@ public class FavoriteService {
     }
 
     @Transactional
-    public void removeFavorite(User user, Product product) {
+    public void removeFavorite1(User user, Product product) {
         favoriteRepository.deleteByUserAndProduct(user, product);
     }
 
